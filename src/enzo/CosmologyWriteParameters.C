@@ -49,6 +49,8 @@ int CosmologyWriteParameters(FILE *fptr, FLOAT StopTime, FLOAT CurrentTime)
   fprintf(fptr, "CosmologyOmegaDarkMatterNow = %"GSYM"\n", OmegaDarkMatterNow);
   fprintf(fptr, "CosmologyOmegaLambdaNow     = %"GSYM"\n", OmegaLambdaNow);
   fprintf(fptr, "CosmologyOmegaRadiationNow  = %"GSYM"\n", OmegaRadiationNow);
+  fprintf(fptr, "CosmologyUseModifiedLambda  = %"ISYM"\n", UseModifiedLambda);
+  fprintf(fptr, "CosmologyVacuumAlpha        = %"GSYM"\n", VacuumAlpha);
   fprintf(fptr, "CosmologyComovingBoxSize    = %"GSYM"\n", ComovingBoxSize);
   fprintf(fptr, "CosmologyMaxExpansionRate   = %"GSYM"\n", MaxExpansionRate);
   fprintf(fptr, "CosmologyInitialRedshift    = %"GOUTSYM"\n", InitialRedshift);

@@ -29,6 +29,12 @@ EXTERN float OmegaLambdaNow;
 
 EXTERN float OmegaRadiationNow;
 
+/* Modification to OmegaLambda such that Lamba = alpha * Lambda(LCDM). */
+
+EXTERN int UseModifiedLambda;
+
+EXTERN float VacuumAlpha;
+
 /* The comoving size of the simulation box (along the x-dir) in h^{-1} Mpc. */
 
 EXTERN float ComovingBoxSize;

@@ -44,20 +44,49 @@ int CosmologyComputeExpansionFactor(FLOAT time, FLOAT *a, FLOAT *dadt)
  
   FLOAT TimeHubble0 = time * TimeUnits * (HubbleConstantNow*3.24e-18);
 
-  /* Interpolate from a(t) table. */
- 
-   if (CosmologyTableComputeExpansionFactor(TimeHubble0, a) == FAIL) {
-      ENZO_FAIL("Error in CosmologyTableComputeExpansionFactor.\n");
+  if (UseModifiedLambda == TRUE) {
+
+    if (ABS(VacuumAlpha) < 1e-10) {
+      ENZO_FAIL("VacuumAlpha cannot be zero.\n");
+    }
+
+    FLOAT tau = TimeHubble0 * sqrt(OmegaLambdaNow) / ABS(VacuumAlpha);
+    FLOAT aref = POW((OmegaMatterNow / (ABS(VacuumAlpha) * OmegaLambdaNow)), 1./3.);
+    FLOAT val = 1.5 * tau;
+    FLOAT bigA, tHt;
+    if (VacuumAlpha < 0) {
+      bigA = POW(sin(val), 2./3.);
+      tHt = tau * cos(val) / sin(val);
+    }
+    else {
+      bigA = POW(sinh(val), 2./3.);
+      // tHt = tau * cosh(val) / sinh(val);
+      tHt = tau / tanh(val);
+    }
+
+    *a = bigA * aref;
+    *a *= (1 + InitialRedshift);    // to convert to code units, divide by [a]
+    *dadt = (*a) * tHt / time;
   }
-   *a *= (1 + InitialRedshift);    // to convert to code units, divide by [a]
+
+  else {
+
+    /* Interpolate from a(t) table. */
  
-  /* Compute the derivative of the expansion factor (Peebles93, eq. 13.3). */
+    if (CosmologyTableComputeExpansionFactor(TimeHubble0, a) == FAIL) {
+      ENZO_FAIL("Error in CosmologyTableComputeExpansionFactor.\n");
+    }
+    *a *= (1 + InitialRedshift);    // to convert to code units, divide by [a]
  
-  FLOAT TempVal = (*a)/(1 + InitialRedshift);
-  *dadt = sqrt( 2.0/(3.0*OmegaMatterNow*(*a)) *
-	       (OmegaMatterNow + OmegaCurvatureNow*TempVal +
-		OmegaLambdaNow*TempVal*TempVal*TempVal +
-                OmegaRadiationNow/TempVal));
+    /* Compute the derivative of the expansion factor (Peebles93, eq. 13.3). */
  
+    FLOAT TempVal = (*a)/(1 + InitialRedshift);
+    *dadt = sqrt( 2.0/(3.0*OmegaMatterNow*(*a)) *
+                  (OmegaMatterNow + OmegaCurvatureNow*TempVal +
+                   OmegaLambdaNow*TempVal*TempVal*TempVal +
+                   OmegaRadiationNow/TempVal));
+
+  }
+
   return SUCCESS;
 }

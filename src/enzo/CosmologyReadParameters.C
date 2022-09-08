@@ -39,6 +39,8 @@ int CosmologyReadParameters(FILE *fptr, FLOAT *StopTime, FLOAT *InitTime)
   OmegaDarkMatterNow   = FLOAT_UNDEFINED;
   OmegaLambdaNow       = 0.721;
   OmegaRadiationNow    = 0.0;
+  UseModifiedLambda    = 0;
+  VacuumAlpha          = 1.0;
   ComovingBoxSize      = 64;
   MaxExpansionRate     = 0.01;
   InitialRedshift      = 20;
@@ -69,6 +71,8 @@ int CosmologyReadParameters(FILE *fptr, FLOAT *StopTime, FLOAT *InitTime)
     ret += sscanf(line, "CosmologyOmegaDarkMatterNow = %"FSYM, &OmegaDarkMatterNow);
     ret += sscanf(line, "CosmologyOmegaLambdaNow = %"FSYM, &OmegaLambdaNow);
     ret += sscanf(line, "CosmologyOmegaRadiationNow = %"FSYM, &OmegaRadiationNow);
+    ret += sscanf(line, "CosmologyUseModifiedLambda = %"ISYM, &UseModifiedLambda);
+    ret += sscanf(line, "CosmologyVacuumAlpha = %"FSYM, &VacuumAlpha);
     ret += sscanf(line, "CosmologyComovingBoxSize = %"FSYM, &ComovingBoxSize);
     ret += sscanf(line, "CosmologyMaxExpansionRate = %"FSYM,
 		  &MaxExpansionRate);
@@ -102,6 +106,7 @@ int CosmologyReadParameters(FILE *fptr, FLOAT *StopTime, FLOAT *InitTime)
  
   }
 
+  //if (UseModifiedLambda == FALSE) {
   /* Calculate the table of a vs. t.
      Adjust table bounds if exceeded by the initial/final redshift. */
 
@@ -113,6 +118,7 @@ int CosmologyReadParameters(FILE *fptr, FLOAT *StopTime, FLOAT *InitTime)
   if (InitializeCosmologyTable() == FAIL) {
     ENZO_FAIL("Error in InitializeCosmologyTable.\n");
   }
+  //}
 
   if (MyProcessorNumber == ROOT_PROCESSOR &&
       OmegaDarkMatterNow == FLOAT_UNDEFINED &&

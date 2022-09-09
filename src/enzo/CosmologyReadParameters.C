@@ -41,6 +41,7 @@ int CosmologyReadParameters(FILE *fptr, FLOAT *StopTime, FLOAT *InitTime)
   OmegaRadiationNow    = 0.0;
   UseModifiedLambda    = 0;
   VacuumAlpha          = 1.0;
+  BeforeTurnAround     = TRUE;
   ComovingBoxSize      = 64;
   MaxExpansionRate     = 0.01;
   InitialRedshift      = 20;
@@ -126,7 +127,8 @@ int CosmologyReadParameters(FILE *fptr, FLOAT *StopTime, FLOAT *InitTime)
     ENZO_FAIL("Must define CosmologyOmegaDarkMatterNow if using must-refine particles in a cosmology simulation.");
   
   /* Initialize by finding the time at the initial redshift. */
- 
+
+  BeforeTurnAround = TRUE;
   if (CosmologyComputeTimeFromRedshift(InitialRedshift,
 				       &InitialTimeInCodeUnits) == FAIL) {
     ENZO_FAIL("Error in ComputeTimeFromRedshift.\n");
@@ -135,7 +137,8 @@ int CosmologyReadParameters(FILE *fptr, FLOAT *StopTime, FLOAT *InitTime)
     *InitTime = InitialTimeInCodeUnits;
  
   /* Now find the time at the end of the simulation. */
- 
+
+  BeforeTurnAround = FALSE;
   if (CosmologyComputeTimeFromRedshift(FinalRedshift, StopTime) == FAIL) {
     ENZO_FAIL("Error in ComputeTimeFromRedshift.\n");
   }

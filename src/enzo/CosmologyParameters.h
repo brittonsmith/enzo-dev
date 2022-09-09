@@ -35,6 +35,8 @@ EXTERN int UseModifiedLambda;
 
 EXTERN float VacuumAlpha;
 
+EXTERN int BeforeTurnAround;
+
 /* The comoving size of the simulation box (along the x-dir) in h^{-1} Mpc. */
 
 EXTERN float ComovingBoxSize;

@@ -46,12 +46,12 @@ int CosmologyComputeExpansionFactor(FLOAT time, FLOAT *a, FLOAT *dadt)
 
   if (UseModifiedLambda == TRUE) {
 
-    if (ABS(VacuumAlpha) < 1e-10) {
+    if (abs(VacuumAlpha) < 1e-10) {
       ENZO_FAIL("VacuumAlpha cannot be zero.\n");
     }
 
-    FLOAT tau = TimeHubble0 * sqrt(OmegaLambdaNow) / ABS(VacuumAlpha);
-    FLOAT aref = POW((OmegaMatterNow / (ABS(VacuumAlpha) * OmegaLambdaNow)), 1./3.);
+    FLOAT tau = TimeHubble0 * sqrt(OmegaLambdaNow) / abs(VacuumAlpha);
+    FLOAT aref = POW((OmegaMatterNow / (abs(VacuumAlpha) * OmegaLambdaNow)), 1./3.);
     FLOAT val = 1.5 * tau;
     FLOAT bigA, tHt;
     if (VacuumAlpha < 0) {

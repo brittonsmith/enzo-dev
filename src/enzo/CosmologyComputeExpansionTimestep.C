@@ -44,7 +44,7 @@ int CosmologyComputeExpansionTimestep(FLOAT time, float *dtExpansion)
   /* Compute the maximum allwed timestep given the maximum allowed
      expansion factor. */
  
-  *dtExpansion = MaxExpansionRate*a/dadt;
+  *dtExpansion = abs(MaxExpansionRate*a/dadt);
  
   return SUCCESS;
 }

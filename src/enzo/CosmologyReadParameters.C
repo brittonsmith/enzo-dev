@@ -107,7 +107,7 @@ int CosmologyReadParameters(FILE *fptr, FLOAT *StopTime, FLOAT *InitTime)
  
   }
 
-  //if (UseModifiedLambda == FALSE) {
+  if (UseModifiedLambda == FALSE) {
   /* Calculate the table of a vs. t.
      Adjust table bounds if exceeded by the initial/final redshift. */
 
@@ -119,7 +119,7 @@ int CosmologyReadParameters(FILE *fptr, FLOAT *StopTime, FLOAT *InitTime)
   if (InitializeCosmologyTable() == FAIL) {
     ENZO_FAIL("Error in InitializeCosmologyTable.\n");
   }
-  //}
+  }
 
   if (MyProcessorNumber == ROOT_PROCESSOR &&
       OmegaDarkMatterNow == FLOAT_UNDEFINED &&

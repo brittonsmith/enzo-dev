@@ -47,7 +47,7 @@ int CosmologyComputeTimeFromRedshift(FLOAT Redshift, FLOAT *TimeCodeUnits)
 
     if (VacuumAlpha < 0) {
       tau = (2./3.) * asin(POW(bigA, 1.5));
-      if (BeforeTurnAround == TRUE) {
+      if (BeforeTurnAround == FALSE) {
         tau = 2. * pi / 3. - tau;
       }
     }

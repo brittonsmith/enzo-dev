@@ -246,14 +246,6 @@ int RadiativeTransferReadParameters(FILE *fptr)
                     "radiation near sources.\n");
   }
 
-#ifdef USE_GRACKLE
-  // Set some radiative transfer grackle parameters.
-  if (grackle_data->use_grackle == TRUE) {
-    grackle_data->radiative_transfer_coupled_rate_solver = (Eint32) RadiativeTransferCoupledRateSolver;
-    grackle_data->radiative_transfer_hydrogen_only       = (Eint32) RadiativeTransferHydrogenOnly;
-  }
-#endif // USE_GRACKLE
-
   delete [] dummy;
 
   return SUCCESS;

@@ -151,6 +151,14 @@ int GrackleReadParameters(FILE *fptr, FLOAT InitTime)
     ret += sscanf(line, "use_dust_density_field = %d",
                   &grackle_data->use_dust_density_field);
 
+    /* These parameters control behavior in Grackle and in the
+       radiation transfer so we read them here and also in
+       RadiativeTransferReadParameters. */
+    ret += sscanf(line, "RadiativeTransferCoupledRateSolver = %d",
+                  &grackle_data->radiative_transfer_coupled_rate_solver);
+    ret += sscanf(line, "RadiativeTransferHydrogenOnly = %d",
+                  &grackle_data->radiative_transfer_hydrogen_only);
+
     /* If the dummy char space was used, then make another. */
     if (*dummy != 0) {
       dummy = new char[MAX_LINE_LENGTH];
@@ -198,9 +206,6 @@ int GrackleReadParameters(FILE *fptr, FLOAT InitTime)
   grackle_data->UVbackground_redshift_fullon   = (double) CoolData.RadiationRedshiftFullOn;
   grackle_data->UVbackground_redshift_drop     = (double) CoolData.RadiationRedshiftDropOff;
   grackle_data->use_radiative_transfer         = (Eint32) RadiativeTransfer;
-  // grackle_data->radiative_transfer_coupled_rate_solver set in RadiativeTransferReadParameters
-  // grackle_data->radiative_transfer_hydrogen_only set in RadiativeTransferReadParameters
-
 
   // Error checking for behavior not implemented
   if ( (grackle_data->photoelectric_heating == 2) ||
